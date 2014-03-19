@@ -96,6 +96,7 @@ class Resource(ResourceAttributesMixin, object):
             url = url + "/"
 
         headers = {"accept": s.get_content_type()}
+        headers.update(self._store["headers"])
 
         if not files:
             headers["content-type"] = s.get_content_type()
@@ -181,7 +182,7 @@ class Resource(ResourceAttributesMixin, object):
 
 class API(ResourceAttributesMixin, object):
 
-    def __init__(self, base_url=None, auth=None, format=None, append_slash=True, session=None, serializer=None):
+    def __init__(self, base_url=None, auth=None, format=None, append_slash=True, session=None, serializer=None, access_token=None):
         if serializer is None:
             serializer = Serializer(default=format)
 
@@ -195,6 +196,7 @@ class API(ResourceAttributesMixin, object):
             "append_slash": append_slash,
             "session": session,
             "serializer": serializer,
+            "headers": {u'Authorization': u'Bearer ' + access_token} if access_token else {}
         }
 
         # Do some Checks for Required Values
