@@ -123,15 +123,14 @@ class Resource(ResourceAttributesMixin, object):
 
         if resp.headers.get("content-type", None):
             content_type = resp.headers.get("content-type").split(";")[0].strip()
-
             try:
                 stype = s.get_serializer(content_type=content_type)
+                response = stype.loads(resp.content)
             except exceptions.SerializerNotAvailable:
-                return resp.content
-
-            return stype.loads(resp.content)
+                response = resp.content
         else:
-            return resp.content
+            response = resp.content
+        return self._store["response_hook"](response)
 
     def get(self, **kwargs):
         resp = self._request("GET", params=kwargs)
@@ -181,7 +180,7 @@ class Resource(ResourceAttributesMixin, object):
 
 class API(ResourceAttributesMixin, object):
 
-    def __init__(self, base_url=None, auth=None, format=None, append_slash=True, session=None, serializer=None):
+    def __init__(self, base_url=None, auth=None, format=None, append_slash=True, session=None, serializer=None, response_hook=None):
         if serializer is None:
             serializer = Serializer(default=format)
 
@@ -195,6 +194,7 @@ class API(ResourceAttributesMixin, object):
             "append_slash": append_slash,
             "session": session,
             "serializer": serializer,
+            "response_hook": response_hook or (lambda x: x)
         }
 
         # Do some Checks for Required Values
