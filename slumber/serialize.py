@@ -36,12 +36,12 @@ class BaseSerializer(object):
 class JsonSerializer(BaseSerializer):
 
     content_types = [
-                        "application/json",
-                        "application/x-javascript",
-                        "text/javascript",
-                        "text/x-javascript",
-                        "text/x-json",
-                    ]
+        "application/json",
+        "application/x-javascript",
+        "text/javascript",
+        "text/x-javascript",
+        "text/x-json",
+    ]
     key = "json"
 
     def loads(self, data):
