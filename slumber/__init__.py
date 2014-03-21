@@ -143,8 +143,6 @@ class Resource(ResourceAttributesMixin, object):
             return  # @@@ We should probably do some sort of error here? (Is this even possible?)
 
     def post(self, data=None, files=None, **kwargs):
-        s = self._store["serializer"]
-
         resp = self._request("POST", data=data, files=files, params=kwargs)
         if 200 <= resp.status_code <= 299:
             return self._try_to_serialize_response(resp)
@@ -153,8 +151,6 @@ class Resource(ResourceAttributesMixin, object):
             return
 
     def patch(self, data=None, files=None, **kwargs):
-        s = self._store["serializer"]
-
         resp = self._request("PATCH", data=data, files=files, params=kwargs)
         if 200 <= resp.status_code <= 299:
             return self._try_to_serialize_response(resp)
@@ -164,7 +160,6 @@ class Resource(ResourceAttributesMixin, object):
 
     def put(self, data=None, files=None, **kwargs):
         resp = self._request("PUT", data=data, files=files, params=kwargs)
-
         if 200 <= resp.status_code <= 299:
             return self._try_to_serialize_response(resp)
         else:
