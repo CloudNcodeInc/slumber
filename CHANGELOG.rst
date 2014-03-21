@@ -7,6 +7,11 @@ Changelog
 development version
 -------------------
 
+0.6.2
+-----
+
+* Add token to authenticate requests with a token.
+* Add response_hook to allow tweaking the returned response.
 
 0.6.0
 -----
