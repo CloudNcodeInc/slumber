@@ -97,7 +97,7 @@ class Resource(ResourceAttributesMixin, object):
 
         headers = {"accept": s.get_content_type()}
 
-        if self._store["token"]:
+        if self._store.get("token", None):
             headers["Authorization"] = "{token_type} {access_token}".format(**self._store["token"])
 
         if not files:
@@ -133,7 +133,7 @@ class Resource(ResourceAttributesMixin, object):
                 response = resp.content
         else:
             response = resp.content
-        return self._store["response_hook"](response)
+        return self._store.get("response_hook", lambda x: x)(response)
 
     def get(self, **kwargs):
         resp = self._request("GET", params=kwargs)
