@@ -1,4 +1,8 @@
-from slumber import exceptions
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, unicode_literals
+
+from . import exceptions
 
 _SERIALIZERS = {
     "json": True,

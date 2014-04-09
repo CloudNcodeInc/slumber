@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, unicode_literals
+
 import posixpath
 import urlparse
 
 import requests
 
-from slumber import exceptions
-from slumber.serialize import Serializer
+from . import exceptions
+from .serialize import Serializer
 
 __all__ = ["Resource", "API"]
 

@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import unittest
 import slumber
+import sys
 
 
 class UtilsTestCase(unittest.TestCase):
@@ -53,10 +56,11 @@ class UtilsTestCase(unittest.TestCase):
         url = slumber.url_join("http://example.com/", "tǝst/")
         self.assertEqual(url, expected)
 
-        url = slumber.url_join("http://example.com/", "tǝst/".decode('utf8').encode('utf8'))
+        url = slumber.url_join("http://example.com/", "tǝst/".encode('utf8').decode('utf8'))
         self.assertEqual(url, expected)
 
+    @unittest.skipIf(sys.version_info[0] >= 3, "Python 3 does not allow mixing strings and bytes.")
     def test_url_join_decoded_unicode(self):
-        url = slumber.url_join("http://example.com/", "tǝst/".decode('utf8'))
-        expected = "http://example.com/tǝst/".decode('utf8')
+        url = slumber.url_join("http://example.com/".encode('utf-8'), "tǝst/")
+        expected = "http://example.com/tǝst/"
         self.assertEqual(url, expected)
