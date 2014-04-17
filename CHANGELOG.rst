@@ -7,10 +7,11 @@ Changelog
 development version
 -------------------
 
-0.7.0
+0.7.1
 -----
 
 * Now compatible with Python 3.
+* Convert bytes strings to unicode strings.
 
 0.6.2
 -----

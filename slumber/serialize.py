@@ -49,7 +49,7 @@ class JsonSerializer(BaseSerializer):
     key = "json"
 
     def loads(self, data):
-        return json.loads(data)
+        return json.loads(data if isinstance(data, unicode) else data.decode('utf-8'))
 
     def dumps(self, data):
         return json.dumps(data)
@@ -61,7 +61,7 @@ class YamlSerializer(BaseSerializer):
     key = "yaml"
 
     def loads(self, data):
-        return yaml.safe_load(data)
+        return yaml.safe_load(data if isinstance(data, unicode) else data.decode('utf-8'))
 
     def dumps(self, data):
         return yaml.dump(data)
