@@ -2,11 +2,8 @@
 
 from __future__ import unicode_literals
 
-import mock
-import unittest
-import requests
-import slumber
-import slumber.serialize
+import mock, unittest, requests
+import slumber, slumber.serialize
 
 
 class ResourceTestCase(unittest.TestCase):

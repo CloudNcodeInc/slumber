@@ -3,8 +3,7 @@
 from __future__ import unicode_literals
 
 import unittest
-import slumber
-import slumber.serialize
+import slumber, slumber.serialize
 
 
 class ResourceTestCase(unittest.TestCase):

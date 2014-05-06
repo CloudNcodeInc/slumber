@@ -2,9 +2,8 @@
 
 from __future__ import unicode_literals
 
-import unittest
+import unittest, sys
 import slumber
-import sys
 
 
 class UtilsTestCase(unittest.TestCase):

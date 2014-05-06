@@ -2,10 +2,7 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import posixpath
-import urlparse
-
-import requests
+import posixpath, urlparse, requests
 
 from . import exceptions
 from .serialize import Serializer

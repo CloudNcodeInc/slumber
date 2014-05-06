@@ -2,8 +2,7 @@
 
 from __future__ import unicode_literals
 
-import os.path
-import unittest
+import os.path, unittest
 
 
 def get_tests():
