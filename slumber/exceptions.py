@@ -14,10 +14,11 @@ class SlumberHttpBaseException(SlumberBaseException):
     All Slumber HTTP Exceptions inherit from this exception.
     """
 
-    def __init__(self, *args, **kwargs):
-        for key, value in kwargs.iteritems():
-            setattr(self, key, value)
-        super(SlumberHttpBaseException, self).__init__(*args)
+    def __init__(self, response):
+        self.response = response
+        value = "%s Error %s %s: %s, text: %s" % ('Client' if response.status_code <= 499 else 'Server',
+                                                  response.status_code, response.reason, response.url, response.text)
+        super(SlumberHttpBaseException, self).__init__(value)
 
 
 class HttpClientError(SlumberHttpBaseException):

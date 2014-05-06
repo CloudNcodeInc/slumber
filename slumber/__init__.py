@@ -103,14 +103,15 @@ class Resource(ResourceAttributesMixin, object):
             if data is not None:
                 data = s.dumps(data)
 
-        resp = self._store["session"].request(method, url, data=data, params=params, files=files, headers=headers)
+        response = self._store["session"].request(method, url, data=data, params=params, files=files, headers=headers)
 
-        if 400 <= resp.status_code <= 499:
-            raise exceptions.HttpClientError("Client Error %s: %s" % (resp.status_code, url), response=resp, content=resp.content)
-        elif 500 <= resp.status_code <= 599:
-            raise exceptions.HttpServerError("Server Error %s: %s" % (resp.status_code, url), response=resp, content=resp.content)
+        if 400 <= response.status_code <= 499:
+            raise exceptions.HttpClientError(response)
+        elif 500 <= response.status_code <= 599:
+            raise exceptions.HttpServerError(response)
 
-        self._ = resp
+        self._ = response
+        return response
 
         return resp
 
