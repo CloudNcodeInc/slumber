@@ -12,10 +12,10 @@ class ResourceTestCase(unittest.TestCase):
         s = slumber.serialize.Serializer()
 
         for content_type in [
-                                "application/json",
-                                "application/x-javascript",
-                                "text/javascript",
-                                "text/x-javascript",
-                                "text/x-json",
-                            ]:
+            "application/json",
+            "application/x-javascript",
+            "text/javascript",
+            "text/x-javascript",
+            "text/x-json",
+        ]:
             s.get_serializer(content_type=content_type)

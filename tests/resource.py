@@ -23,10 +23,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.return_value = r
 
-        resp = self.base_resource._request("GET")
+        response = self.base_resource._request("GET")
 
-        self.assertTrue(resp is r)
-        self.assertEqual(resp.content, r.content)
+        self.assertTrue(response is r)
+        self.assertEqual(response.content, r.content)
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "GET",
@@ -34,11 +34,14 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.get()
-        self.assertEqual(resp['result'], ['a', 'b', 'c'])
+        response = self.base_resource.get()
+        self.assertEqual(response['result'], ['a', 'b', 'c'])
 
     def test_get_200_text(self):
         r = mock.Mock(spec=requests.Response)
@@ -52,10 +55,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.return_value = r
 
-        resp = self.base_resource._request("GET")
+        response = self.base_resource._request("GET")
 
-        self.assertTrue(resp is r)
-        self.assertEqual(resp.content, "Mocked Content")
+        self.assertTrue(response is r)
+        self.assertEqual(response.content, "Mocked Content")
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "GET",
@@ -63,11 +66,14 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.get()
-        self.assertEqual(resp, r.content)
+        response = self.base_resource.get()
+        self.assertEqual(response, r.content)
 
     def test_post_201_redirect(self):
         r1 = mock.Mock(spec=requests.Response)
@@ -86,10 +92,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.side_effect = (r1, r2)
 
-        resp = self.base_resource._request("POST")
+        response = self.base_resource._request("POST")
 
-        self.assertTrue(resp is r1)
-        self.assertEqual(resp.content, r1.content)
+        self.assertTrue(response is r1)
+        self.assertEqual(response.content, r1.content)
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "POST",
@@ -97,11 +103,14 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.post(data={'foo': 'bar'})
-        self.assertEqual(resp['result'], ['a', 'b', 'c'])
+        response = self.base_resource.post(data={'foo': 'bar'})
+        self.assertEqual(response['result'], ['a', 'b', 'c'])
 
     def test_post_decodable_response(self):
         r = mock.Mock(spec=requests.Response)
@@ -115,10 +124,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.return_value = r
 
-        resp = self.base_resource._request("POST")
+        response = self.base_resource._request("POST")
 
-        self.assertTrue(resp is r)
-        self.assertEqual(resp.content, r.content)
+        self.assertTrue(response is r)
+        self.assertEqual(response.content, r.content)
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "POST",
@@ -126,11 +135,14 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.post(data={'foo': 'bar'})
-        self.assertEqual(resp['result'], ['a', 'b', 'c'])
+        response = self.base_resource.post(data={'foo': 'bar'})
+        self.assertEqual(response['result'], ['a', 'b', 'c'])
 
     def test_patch_201_redirect(self):
         r1 = mock.Mock(spec=requests.Response)
@@ -149,10 +161,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.side_effect = (r1, r2)
 
-        resp = self.base_resource._request("PATCH")
+        response = self.base_resource._request("PATCH")
 
-        self.assertTrue(resp is r1)
-        self.assertEqual(resp.content, r1.content)
+        self.assertTrue(response is r1)
+        self.assertEqual(response.content, r1.content)
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "PATCH",
@@ -160,11 +172,14 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.patch(data={'foo': 'bar'})
-        self.assertEqual(resp['result'], ['a', 'b', 'c'])
+        response = self.base_resource.patch(data={'foo': 'bar'})
+        self.assertEqual(response['result'], ['a', 'b', 'c'])
 
     def test_patch_decodable_response(self):
         r = mock.Mock(spec=requests.Response)
@@ -178,10 +193,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.return_value = r
 
-        resp = self.base_resource._request("PATCH")
+        response = self.base_resource._request("PATCH")
 
-        self.assertTrue(resp is r)
-        self.assertEqual(resp.content, r.content)
+        self.assertTrue(response is r)
+        self.assertEqual(response.content, r.content)
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "PATCH",
@@ -189,11 +204,14 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.patch(data={'foo': 'bar'})
-        self.assertEqual(resp['result'], ['a', 'b', 'c'])
+        response = self.base_resource.patch(data={'foo': 'bar'})
+        self.assertEqual(response['result'], ['a', 'b', 'c'])
 
     def test_put_201_redirect(self):
         r1 = mock.Mock(spec=requests.Response)
@@ -212,10 +230,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.side_effect = (r1, r2)
 
-        resp = self.base_resource._request("PUT")
+        response = self.base_resource._request("PUT")
 
-        self.assertTrue(resp is r1)
-        self.assertEqual(resp.content, r1.content)
+        self.assertTrue(response is r1)
+        self.assertEqual(response.content, r1.content)
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "PUT",
@@ -223,11 +241,14 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.put(data={'foo': 'bar'})
-        self.assertEqual(resp['result'], ['a', 'b', 'c'])
+        response = self.base_resource.put(data={'foo': 'bar'})
+        self.assertEqual(response['result'], ['a', 'b', 'c'])
 
     def test_put_decodable_response(self):
         r = mock.Mock(spec=requests.Response)
@@ -241,10 +262,10 @@ class ResourceTestCase(unittest.TestCase):
         })
         self.base_resource._store["session"].request.return_value = r
 
-        resp = self.base_resource._request("PUT")
+        response = self.base_resource._request("PUT")
 
-        self.assertTrue(resp is r)
-        self.assertEqual(resp.content, r.content)
+        self.assertTrue(response is r)
+        self.assertEqual(response.content, r.content)
 
         self.base_resource._store["session"].request.assert_called_once_with(
             "PUT",
@@ -252,22 +273,25 @@ class ResourceTestCase(unittest.TestCase):
             data=None,
             files=None,
             params=None,
-            headers={"content-type": self.base_resource._store["serializer"].get_content_type(), "accept": self.base_resource._store["serializer"].get_content_type()}
+            headers={
+                "content-type": self.base_resource._store["serializer"].get_content_type(),
+                "accept": self.base_resource._store["serializer"].get_content_type()
+            }
         )
 
-        resp = self.base_resource.put(data={'foo': 'bar'})
-        self.assertEqual(resp['result'], ['a', 'b', 'c'])
+        response = self.base_resource.put(data={'foo': 'bar'})
+        self.assertEqual(response['result'], ['a', 'b', 'c'])
 
     def test_handle_serialization(self):
         self.base_resource._store.update({
             "serializer": slumber.serialize.Serializer(),
         })
 
-        resp = mock.Mock(spec=requests.Response)
-        resp.headers = {"content-type": "application/json; charset=utf-8"}
-        resp.content = '{"foo": "bar"}'
+        response = mock.Mock(spec=requests.Response)
+        response.headers = {"content-type": "application/json; charset=utf-8"}
+        response.content = '{"foo": "bar"}'
 
-        r = self.base_resource._try_to_serialize_response(resp)
+        r = self.base_resource._try_to_serialize_response(response)
 
         if not isinstance(r, dict):
             self.fail("Serialization did not take place")

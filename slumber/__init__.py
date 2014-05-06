@@ -113,61 +113,59 @@ class Resource(ResourceAttributesMixin, object):
         self._ = response
         return response
 
-        return resp
-
-    def _handle_redirect(self, resp, **kwargs):
+    def _handle_redirect(self, response, **kwargs):
         # @@@ Hacky, see description in __call__
-        resource_obj = self(url_override=resp.headers["location"])
+        resource_obj = self(url_override=response.headers["location"])
         return resource_obj.get(params=kwargs)
 
-    def _try_to_serialize_response(self, resp):
+    def _try_to_serialize_response(self, response):
         s = self._store["serializer"]
 
-        if resp.headers.get("content-type", None):
-            content_type = resp.headers.get("content-type").split(";")[0].strip()
+        if response.headers.get("content-type", None):
+            content_type = response.headers.get("content-type").split(";")[0].strip()
             try:
                 stype = s.get_serializer(content_type=content_type)
-                response = stype.loads(resp.content)
+                response_content = stype.loads(response.content)
             except exceptions.SerializerNotAvailable:
-                response = resp.content
+                response_content = response.content
         else:
-            response = resp.content
-        return self._store.get("response_hook", lambda x: x)(response)
+            response_content = response.content
+        return self._store.get("response_hook", lambda x: x)(response_content)
 
     def get(self, **kwargs):
-        resp = self._request("GET", params=kwargs)
-        if 200 <= resp.status_code <= 299:
-            return self._try_to_serialize_response(resp)
+        response = self._request("GET", params=kwargs)
+        if 200 <= response.status_code <= 299:
+            return self._try_to_serialize_response(response)
         else:
             return  # @@@ We should probably do some sort of error here? (Is this even possible?)
 
     def post(self, data=None, files=None, **kwargs):
-        resp = self._request("POST", data=data, files=files, params=kwargs)
-        if 200 <= resp.status_code <= 299:
-            return self._try_to_serialize_response(resp)
+        response = self._request("POST", data=data, files=files, params=kwargs)
+        if 200 <= response.status_code <= 299:
+            return self._try_to_serialize_response(response)
         else:
             # @@@ Need to be Some sort of Error Here or Something
             return
 
     def patch(self, data=None, files=None, **kwargs):
-        resp = self._request("PATCH", data=data, files=files, params=kwargs)
-        if 200 <= resp.status_code <= 299:
-            return self._try_to_serialize_response(resp)
+        response = self._request("PATCH", data=data, files=files, params=kwargs)
+        if 200 <= response.status_code <= 299:
+            return self._try_to_serialize_response(response)
         else:
             # @@@ Need to be Some sort of Error Here or Something
             return
 
     def put(self, data=None, files=None, **kwargs):
-        resp = self._request("PUT", data=data, files=files, params=kwargs)
-        if 200 <= resp.status_code <= 299:
-            return self._try_to_serialize_response(resp)
+        response = self._request("PUT", data=data, files=files, params=kwargs)
+        if 200 <= response.status_code <= 299:
+            return self._try_to_serialize_response(response)
         else:
             return False
 
     def delete(self, **kwargs):
-        resp = self._request("DELETE", params=kwargs)
-        if 200 <= resp.status_code <= 299:
-            if resp.status_code == 204:
+        response = self._request("DELETE", params=kwargs)
+        if 200 <= response.status_code <= 299:
+            if response.status_code == 204:
                 return True
             else:
                 return True  # @@@ Should this really be True?
