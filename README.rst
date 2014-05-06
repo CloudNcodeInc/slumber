@@ -1,6 +1,11 @@
 Slumber
 =======
 
+.. image:: https://secure.travis-ci.org/davidfischer-ch/slumber.png
+   :target: http://travis-ci.org/davidfischer-ch/slumber
+
+Afraid of red status ? Please click on the link, sometimes this is not my fault ;-)
+
 Slumber is a Python library that provides a convenient yet powerful
 object-oriented interface to ReSTful APIs. It acts as a wrapper around the
 excellent requests_ library and abstracts away the handling of URLs, serialization,
