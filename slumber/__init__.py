@@ -35,10 +35,8 @@ class ResourceAttributesMixin(object):
             raise AttributeError(item)
 
         kwargs = {}
-        for key, value in self._store.iteritems():
-            kwargs[key] = value
-
-        kwargs.update({"base_url": url_join(self._store["base_url"], item)})
+        kwargs.update(self._store)
+        kwargs["base_url"] = url_join(self._store["base_url"], item)
 
         return Resource(**kwargs)
 
@@ -70,8 +68,7 @@ class Resource(ResourceAttributesMixin, object):
             return self
 
         kwargs = {}
-        for key, value in self._store.iteritems():
-            kwargs[key] = value
+        kwargs.update(self._store)
 
         if id is not None:
             kwargs["base_url"] = url_join(self._store["base_url"], id)
