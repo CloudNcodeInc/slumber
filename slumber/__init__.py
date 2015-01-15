@@ -46,7 +46,7 @@ class Resource(ResourceAttributesMixin, object):
     which may or may not have children.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         self._store = kwargs
 
     def __call__(self, id=None, format=None, url_override=None):
