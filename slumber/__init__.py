@@ -32,8 +32,10 @@ class ResourceAttributesMixin(object):
             raise AttributeError(item)
         kwargs = self._store.copy()
         kwargs["base_url"] = url_join(self._store["base_url"], item)
+        return self._get_resource(**kwargs)
 
-        return Resource(**kwargs)
+    def _get_resource(self, **kwargs):
+        return self.__class__(**kwargs)
 
 
 class Resource(ResourceAttributesMixin, object):
@@ -165,6 +167,8 @@ class Resource(ResourceAttributesMixin, object):
 
 class API(ResourceAttributesMixin, object):
 
+    resource_class = Resource
+
     def __init__(self, base_url=None, auth=None, format=None, append_slash=True, session=None, serializer=None,
                  token=None, response_hook=None):
         if serializer is None:
@@ -187,3 +191,6 @@ class API(ResourceAttributesMixin, object):
         # Do some Checks for Required Values
         if self._store.get("base_url") is None:
             raise exceptions.ImproperlyConfigured("base_url is required")
+
+    def _get_resource(self, **kwargs):
+        return self.resource_class(**kwargs)
