@@ -30,9 +30,7 @@ class ResourceAttributesMixin(object):
     def __getattr__(self, item):
         if item.startswith("_"):
             raise AttributeError(item)
-
-        kwargs = {}
-        kwargs.update(self._store)
+        kwargs = self._store.copy()
         kwargs["base_url"] = url_join(self._store["base_url"], item)
 
         return Resource(**kwargs)
@@ -61,8 +59,7 @@ class Resource(ResourceAttributesMixin, object):
         if id is None and format is None and url_override is None:
             return self
 
-        kwargs = {}
-        kwargs.update(self._store)
+        kwargs = self._store.copy()
 
         if id is not None:
             kwargs["base_url"] = url_join(self._store["base_url"], id)
@@ -75,8 +72,6 @@ class Resource(ResourceAttributesMixin, object):
             #    of handling the case when a POST/PUT doesn't return an object
             #    but a Location to an object that we need to GET.
             kwargs["base_url"] = url_override
-
-        kwargs["session"] = self._store["session"]
 
         return self.__class__(**kwargs)
 
@@ -180,7 +175,7 @@ class API(ResourceAttributesMixin, object):
 
         self._store = {
             "base_url": base_url,
-            "format": format if format is not None else "json",
+            "format": "json" if format is None else format,
             "append_slash": append_slash,
             "session": session,
             "serializer": serializer,
