@@ -12,7 +12,7 @@ __all__ = ["Resource", "API"]
 
 def url_join(base, *args):
     """
-    Helper function to join an arbitrary number of url segments together.
+    Helper function to join an arbitrary number of URL segments together.
     """
     scheme, netloc, path, query, fragment = urlparse.urlsplit(base)
     path = path if len(path) else "/"
@@ -22,8 +22,8 @@ def url_join(base, *args):
 
 class ResourceAttributesMixin(object):
     """
-    A Mixin that makes it so that accessing an undefined attribute on a class
-    results in returning a Resource Instance. This Instance can then be used
+    A mixin that makes it so that accessing an undefined attribute on a class
+    results in returning a Resource instance. This instance can then be used
     to make calls to the a Resource.
     """
 
@@ -41,9 +41,9 @@ class ResourceAttributesMixin(object):
 class Resource(ResourceAttributesMixin, object):
     """
     Resource provides the main functionality behind slumber. It handles the
-    attribute -> url, kwarg -> query param, and other related behind the scenes
-    python to HTTP transformations. It's goal is to represent a single resource
-    which may or may not have children.
+    attribute -> URL, kwargs -> query parameters, and other related behind the
+    scenes python to HTTP transformations. It's goal is to represent a single
+    resource which may or may not have children.
     """
 
     def __init__(self, **kwargs):
