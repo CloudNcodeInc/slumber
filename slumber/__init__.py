@@ -119,7 +119,8 @@ class Resource(ResourceAttributesMixin, object):
                 response_content = response.content
         else:
             response_content = response.content
-        return self._store.get("response_hook", lambda x: x)(response_content)
+        hook = self._store.get("response_hook")
+        return hook(self, response_content) if hook else response_content
 
     def get(self, **kwargs):
         response = self._request("GET", params=kwargs)
@@ -180,7 +181,7 @@ class API(ResourceAttributesMixin, object):
             "session": session,
             "serializer": serializer,
             "token": token,
-            "response_hook": response_hook or (lambda x: x)
+            "response_hook": response_hook
         }
 
         # Do some Checks for Required Values
