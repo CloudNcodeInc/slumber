@@ -25,9 +25,6 @@ class ResourceAttributesMixin(object):
     A Mixin that makes it so that accessing an undefined attribute on a class
     results in returning a Resource Instance. This Instance can then be used
     to make calls to the a Resource.
-
-    It assumes that a Meta class exists at self._meta with all the required
-    attributes.
     """
 
     def __getattr__(self, item):
@@ -47,9 +44,6 @@ class Resource(ResourceAttributesMixin, object):
     attribute -> url, kwarg -> query param, and other related behind the scenes
     python to HTTP transformations. It's goal is to represent a single resource
     which may or may not have children.
-
-    It assumes that a Meta class exists at self._meta with all the required
-    attributes.
     """
 
     def __init__(self, *args, **kwargs):
