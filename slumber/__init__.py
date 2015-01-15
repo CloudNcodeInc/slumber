@@ -75,7 +75,7 @@ class Resource(ResourceAttributesMixin, object):
             #    but a Location to an object that we need to GET.
             kwargs["base_url"] = url_override
 
-        return self.__class__(**kwargs)
+        return self._get_resource(**kwargs)
 
     def _request(self, method, data=None, files=None, params=None):
         s = self._store["serializer"]
